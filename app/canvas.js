@@ -1,95 +1,8 @@
 var canvas = document.querySelector('canvas'); //searches for an html element called Canvas
-// var background = new Image();
-// background.src = "/images/leopard.png";
-// in order to cover the entire window, height and width needs to be set in javascript
 
 var c = canvas.getContext('2d'); // c is for context
-// c.lineWidth=4;
-// c.fillStyle = '#26A97D';
-// c.fillRect(100, 100, 150, 150); //(x, y, width, height) x and y are placement coordinates from upper left corner
-// c.fillStyle = 'rgba(255, 0, 0, 0.3)'; //last is opacity/alpha
-// c.fillRect(400, 100, 100, 100);
-// c.fillStyle = 'black';
-// c.fillRect(300, 300, 100, 100);
-// c.fillStyle = 'grey';
-// c.fillRect(540, 400, 150, 150);
-// c.fillStyle = '#A94026';
-// c.fillRect(700, 500, 150, 150);
-
-// for(var s = 0; s < 15; s++){
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   var r = Math.floor(Math.random()* 256);
-//   var g = Math.floor(Math.random()* 256);
-//   var b = Math.floor(Math.random()* 256);
-//   var cssColor = 'rgb(' + r +', ' + g + ',' + b +')';
-//   c.fillStyle = cssColor;
-//   c.fillRect(x, y, 100, 100);s
-// }
-
-// Line
-// c.beginPath();
-// c.moveTo(50, 300); //takes x and y argument, point is invisible until a stroke method is called
-// c.lineTo(350, 200); //takes x and y argument
-// c.lineTo(400, 300);
-// c.lineTo(500, 50);
-// c.lineTo(650, 400);
-// c.lineTo(800, 20);
-// c.lineTo(900, 800);
-// c.lineTo(950, 40);
-// c.strokeStyle = "#7326A9"; //rgba, hex or color
-// c.stroke();
-
-// for (var l=0; l < 5; l++){
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   c.beginPath();
-//   c.moveTo(5, 5);
-//   c.lineTo(x, y);
-//   c.lineTo(x * 2, y * 2);
-//     c.lineTo(x * 3, y * 3);
-//   c.strokeStyle = "black"; //rgba, hex or color
-//   c.stroke();
-//
-// }
-
-// Arc / Circle
-// c.arc(x: Int, y: Int, startingAngle: Float, endAngle: Float, drawCounterClockwise: Bool (false)); -- x and y, radius, and radiens
-//startAngle - where do you want the arc to start
-//endAngle -
-// c.beginPath();
-// c.arc(300, 500, 30, 0, Math.PI * 2, false);
-// c.strokeStyle = "green";
-// c.stroke();
-
-// for(var i=0; i<10;i++){
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   c.beginPath();
-//   c.arc(x, y, 30, 0, Math.PI * 2, false);
-//   c.strokeStyle = "orange";
-//   c.stroke();
-// }
 
 
-// for(var i=0; i<10;i++){
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   c.beginPath();
-//   c.arc(x, y, 30, 0, Math.PI * 2, false);
-//   c.strokeStyle = "red";
-//   c.stroke();
-// }
-
-
-// for(var i=0; i<10;i++){
-//   var x = Math.random() * window.innerWidth;
-//   var y = Math.random() * window.innerHeight;
-//   c.beginPath();
-//   c.arc(x, y, 30, 0, Math.PI * 2, false);
-//   c.strokeStyle = "blue";
-//   c.stroke();
-// }
 
   // creates a mouse object
   var mouse = {
@@ -108,6 +21,13 @@ var c = canvas.getContext('2d'); // c is for context
     '#990D35'
   ];
 
+  window.onload = resize();
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
   window.addEventListener('mousemove',
     function(event) {
       mouse.x = event.x;
@@ -116,7 +36,7 @@ var c = canvas.getContext('2d'); // c is for context
   );
 
   window.addEventListener('resize',
-    function(){
+    function (){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       init();
@@ -189,5 +109,7 @@ var c = canvas.getContext('2d'); // c is for context
         circleArray[i].update();
       }
   }
+
+
     init();
     animate(); //calls the animate function
