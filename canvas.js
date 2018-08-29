@@ -2,11 +2,9 @@ var canvas = document.querySelector('canvas'); //searches for an html element ca
 // var background = new Image();
 // background.src = "/images/leopard.png";
 // in order to cover the entire window, height and width needs to be set in javascript
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 var c = canvas.getContext('2d'); // c is for context
-c.lineWidth=4;
+// c.lineWidth=4;
 // c.fillStyle = '#26A97D';
 // c.fillRect(100, 100, 150, 150); //(x, y, width, height) x and y are placement coordinates from upper left corner
 // c.fillStyle = 'rgba(255, 0, 0, 0.3)'; //last is opacity/alpha
@@ -93,6 +91,38 @@ c.lineWidth=4;
 //   c.stroke();
 // }
 
+  // creates a mouse object
+  var mouse = {
+    x: undefined,
+    y: undefined
+  }
+
+  var maxRadius = 40;
+  // var minRadius = 2;
+
+  var colorArray = [
+    '#82AEB1',
+    '#93C6D6',
+    '#FCD581',
+    '#D52941',
+    '#990D35'
+  ];
+
+  window.addEventListener('mousemove',
+    function(event) {
+      mouse.x = event.x;
+      mouse.y = event.y;
+    }
+  );
+
+  window.addEventListener('resize',
+    function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    }
+  );
+
   //create a javascript object to replicate code below
   function Circle(x, y, dx, dy, radius) {
     this.x = x;
@@ -100,14 +130,16 @@ c.lineWidth=4;
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
+    this.minRadius = radius;
+    this.color = colorArray[Math.floor(Math.random()* colorArray.length)];
 
     // anonymous function
     this.draw = function(){
       c.beginPath();
       c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-      c.strokeStyle = "#EC0974";
-      c.stroke();
-      c.fillStyle = "#09EC17";
+      // c.strokeStyle = "#EC0974";
+      // c.stroke();
+      c.fillStyle = this.color;
       c.fill();
     }
 
@@ -122,24 +154,33 @@ c.lineWidth=4;
           this.x += this.dx;
           this.y += this.dy;
 
+          //interactivity
+          if(mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50){
+            if(this.radius < maxRadius){
+              this.radius += 1;
+            }
+          }else if(this.radius > this.minRadius){
+            this.radius -= 1;
+          }
+
           this.draw();
       }
     }
 
     var circleArray = []; // place to store all 100 circles
 
-    for(var i = 0; i < 100; i++){
-        var radius = 30;
-        var x = Math.random() * (innerWidth - radius * 2) + radius;
-        var y = Math.random() * (innerHeight - radius * 2) + radius;
-        var dx = Math.random() - 0.5; // x velocity either negative or positive
-        var dy = Math.random() - 0.5; // y velocity, multiplying by 8 number increases speed either to 4 or -4
+  function init(){
+      circleArray = []; //resets array to zero circles
+      for(var i = 0; i < 700; i++){
+          var radius = Math.random() * 3 + 1;
+          var x = Math.random() * (innerWidth - radius * 2) + radius;
+          var y = Math.random() * (innerHeight - radius * 2) + radius;
+          var dx = Math.random() - 0.5; // x velocity either negative or positive
+          var dy = Math.random() - 0.5; // y velocity, multiplying by 8 number increases speed either to 4 or -4
 
-
-        circleArray.push(new Circle(x, y, dx, dy, radius));
-    }
-      console.log(circleArray);
-
+          circleArray.push(new Circle(x, y, dx, dy, radius));
+      }
+  }
 
   function animate(){
     requestAnimationFrame(animate); //sets the animate function up as argument to requestAnimationFrame function, which creates a loop
@@ -148,4 +189,5 @@ c.lineWidth=4;
         circleArray[i].update();
       }
   }
+    init();
     animate(); //calls the animate function
